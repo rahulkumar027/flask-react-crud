@@ -1,6 +1,24 @@
+<<<<<<< HEAD
 
 # Flask + React CRUD (Assessment – Task #1)
 
+=======
+# Flask + React CRUD (Assessment – Task #1)
+
+This project implements **Task #1** of the assessment for the role of **Associate Software Engineer (Python / React)**.
+
+It contains a **Flask-based backend** that provides clean, well-structured APIs to **add, edit, delete, and list comments** for a given **Task**, following proper CRUD principles.
+
+---
+
+## 👨‍💻 Author
+**Name:** Rahul Kumar Bhakat  
+**Email:** rahulkumarbhakat27@gmail.com  
+**GitHub:** [rahulkumar027](https://github.com/rahulkumar027)
+
+---
+
+>>>>>>> origin/main
 ## 🧠 About the Project
 
 This backend project was built using **Flask**, **SQLAlchemy**, and **Marshmallow** to demonstrate a strong foundation in API design, database modeling, and clean code architecture.
@@ -68,5 +86,8 @@ Ping: http://127.0.0.1:5000/api/ping
 
 
 
+<<<<<<< HEAD
 
 U
+=======
+>>>>>>> origin/main
