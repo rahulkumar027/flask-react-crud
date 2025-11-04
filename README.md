@@ -62,12 +62,8 @@ cd backend
 python -m venv venv
 .\venv\Scripts\activate
 2. Install Required Packages
-powershell
-Copy code
 pip install flask flask_sqlalchemy flask_marshmallow marshmallow marshmallow-sqlalchemy flask-cors pytest
 3. Run the Server
-powershell
-Copy code
 $env:FLASK_APP="app:create_app"
 flask run
 Now visit → http://127.0.0.1:5000
