@@ -1,49 +1,50 @@
-# flask-react-crud
-Flask + React CRUD App (Assessment Task)
-# flask-react-crud
+# Flask + React CRUD (Assessment – Task #1)
 
-Flask + React CRUD App (Assessment Task)
+This repo contains **Task #1** of the assessment:
 
-This project implements **Task #1** of the assessment:
-- **Backend (Flask + SQLAlchemy + Marshmallow)** with clean CRUD APIs for **Comments** under a **Task**.
-- Includes **error handling**, **pagination-ready list**, and **automated tests** using **pytest**.
-- (Bonus **Task #2 – React UI**: section reserved below; wire-up TBD.)
+- Backend APIs (Flask) to **add, edit, delete, and list comments** for a given **Task**.
+- Clean structure with **SQLAlchemy models**, **Marshmallow validation**, and **Flask Blueprint**.
+- Basic **automated tests** using **pytest**.
 
----
-
-## ✨ Features
-
-- **Flask Blueprint**-based API under `/api/*`
-- **SQLite** local database (absolute path to avoid path mismatches)
-- **Models**: `Task`, `Comment` (1-to-many)
-- **Validation**: Marshmallow schemas for create/update
-- **CORS**: enabled for `/api/*`
-- **Automated tests**: pytest fixtures + in-memory DB
-- **Dev ergonomics**: `/health` and `/api/ping` endpoints for quick checks
+> Task #2 (React UI) can be added later under `/frontend`.
 
 ---
 
-## 🧱 Tech Stack
-
-- **Backend**: Python, Flask, Flask-SQLAlchemy, Marshmallow, Flask-CORS
-- **DB**: SQLite (file: `backend/dev.db`)
-- **Tests**: Pytest
-- **Frontend**: React (placeholder for Task #2)
+## Tech
+- Python, Flask, Flask-SQLAlchemy, Marshmallow, Flask-CORS
+- SQLite (local dev)
+- Pytest (tests)
 
 ---
 
-## 📁 Project Structure
+## Project Structure (relevant to Task #1)
 
-<img width="711" height="460" alt="image" src="https://github.com/user-attachments/assets/d4e31731-a467-43f9-ae0a-48b07748ca6a" />
+backend/
+app/
+init.py # app factory, CORS, blueprint, health
+models.py # Task, Comment models
+schemas.py # Marshmallow schemas
+routes/
+comments.py # /api routes for comments (+ /api/ping)
+tests/
+test_comments_api.py
+dev.db # created on first run (SQLite)
 
+yaml
+Copy code
 
-## 🚀 Quick Start
+---
 
-> You can run with **Windows PowerShell** or **macOS/Linux bash**.  
-> Python 3.10+ recommended.
+## Prerequisites
+- Python 3.10+  
+- Git (optional)  
+- PowerShell (Windows) or bash (macOS/Linux)
 
-### 1) Create & activate virtual env
+---
 
+## Run Locally
+
+### 1) Create & activate a virtual environment
 **Windows (PowerShell)**
 ```powershell
 cd backend
@@ -60,10 +61,8 @@ source venv/bin/activate
 bash
 Copy code
 pip install flask flask_sqlalchemy flask_marshmallow marshmallow marshmallow-sqlalchemy flask-cors pytest
-marshmallow-sqlalchemy silences a warning and plays nice with flask-marshmallow.
-
-3) Run the server
-Windows (PowerShell)
+3) Start the server
+Windows
 
 powershell
 Copy code
@@ -75,25 +74,21 @@ bash
 Copy code
 export FLASK_APP=app:create_app
 flask run
-Server starts at: http://127.0.0.1:5000
+Server runs at: http://127.0.0.1:5000
 
-4) Sanity checks
-Open in a browser or use curl/PowerShell:
+4) Quick health check
+Open:
 
-Health:
+GET /health → http://127.0.0.1:5000/health → {"status":"ok"}
 
-GET http://127.0.0.1:5000/health → {"status":"ok"}
+GET /api/ping → http://127.0.0.1:5000/api/ping → {"ok": true}
 
-Blueprint live:
-
-GET http://127.0.0.1:5000/api/ping → {"ok": true}
-
-🌱 Seeding a Task (so you can attach comments)
-Windows (PowerShell)
+5) Seed one Task (so comments can attach)
+Windows
 
 powershell
 Copy code
-python -c "from app import create_app, db; from app.models import Task; a=create_app(); c=a.app_context(); c.push(); t=Task(title='Seed Task', description='for comments testing'); db.session.add(t); db.session.commit(); print('TASK_ID=', t.id); c.pop()"
+python -c "from app import create_app, db; from app.models import Task; a=create_app(); c=a.app_context(); c.push(); t=Task(title='Seed Task'); db.session.add(t); db.session.commit(); print('TASK_ID=', t.id); c.pop()"
 macOS/Linux
 
 bash
@@ -103,125 +98,69 @@ from app import create_app, db
 from app.models import Task
 a = create_app()
 with a.app_context():
-    t = Task(title="Seed Task", description="for comments testing")
-    db.session.add(t)
-    db.session.commit()
+    t = Task(title="Seed Task")
+    db.session.add(t); db.session.commit()
     print("TASK_ID=", t.id)
 PY
-Note the printed TASK_ID (e.g., 1). Use it in the endpoints below.
+Note the printed TASK_ID (e.g., 1) and use it below.
 
-🔌 API Reference
+API (Task #1)
 Base URL: http://127.0.0.1:5000
 
-Health / Ping
-GET /health → {"status":"ok"}
-
-GET /api/ping → {"ok": true}
-
-Comments (under a Task)
-Create Comment
+Create comment
 POST /api/tasks/<task_id>/comments
 Body:
 
 json
 Copy code
-{
-  "body": "First comment!",
-  "author": "Rahul"
-}
-Returns 201 with created comment.
-
-List Comments
+{ "body": "First comment!", "author": "Rahul" }
+List comments
 GET /api/tasks/<task_id>/comments
-Query (optional): limit (default 50, max 100), offset (default 0)
-Returns:
+Query (optional): limit, offset
+Response:
 
 json
 Copy code
-{
-  "items": [...],
-  "count": 2,
-  "limit": 50,
-  "offset": 0
-}
-Get One
+{ "items": [...], "count": 1, "limit": 50, "offset": 0 }
+Get one comment
 GET /api/comments/<id>
 
-Update
+Update comment
 PATCH /api/comments/<id>
-Body (any of):
+Body (any):
 
 json
 Copy code
 { "body": "Edited text" }
-Delete
+Delete comment
 DELETE /api/comments/<id> → 204 No Content
 
-Error Handling
-400 with { "error": "validation_error", "details": {...} }
+Errors
+400 → validation error (JSON object with details)
 
-404 with { "error": "not_found", "message": "Task not found" }
+404 → not found (e.g., missing task/comment)
 
-🧪 Running Tests
-From backend/ with venv active:
+Run Tests
+From backend/ (venv active):
 
 bash
 Copy code
 pytest -q
-The test suite uses an in-memory SQLite DB and seeds a Task fixture, then verifies:
+Notes
+SQLite path is absolute in the app, so CLI and server share the same dev.db.
 
-create/list/get/patch/delete comment
+Use Postman/PowerShell/curl for POST/PATCH/DELETE (browser address bar does GET only).
 
-pagination surface
+CORS enabled for /api/*.
 
-404 when Task missing
-
-400 validation errors
-
-🖥️ Example Requests (PowerShell)
-powershell
+css
 Copy code
-# List (GET)
-Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/tasks/1/comments"
 
-# Create (POST)
-$body = @{ body = "First comment!"; author = "Rahul" } | ConvertTo-Json
-Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/tasks/1/comments" -Method POST -ContentType "application/json" -Body $body
+Want me to also add a short **Task #2 (React) starter** section to the README so you can extend it later?
 
-# Update (PATCH)
-$patch = @{ body = "Edited text" } | ConvertTo-Json
-Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/comments/1" -Method PATCH -ContentType "application/json" -Body $patch
 
-# Delete (DELETE)
-Invoke-WebRequest -Uri "http://127.0.0.1:5000/api/comments/1" -Method DELETE
-⚠️ Common Pitfalls & Fixes
-404 Not Found on POST in browser
-The browser sends GET. Use PowerShell/curl/Postman for POST/PATCH/DELETE.
 
-Task not found (404)
-Seed a Task first (see Seeding section) and use that real <task_id>.
 
-Using different DB files
-This repo sets an absolute SQLite path in app/__init__.py so CLI and server share the same dev.db.
 
-“Flask-SQLAlchemy integration requires marshmallow-sqlalchemy” warning
-Install: pip install marshmallow-sqlalchemy (optional, cleans up logs).
 
-Windows PowerShell vs bash
-PowerShell doesn’t support bash heredocs or mkdir -p. Use the provided Windows commands.
 
-🧭 Development Notes
-App factory: app:create_app
-
-CORS enabled for /api/*
-
-Pagination ready in list endpoint
-
-Easy to extend with auth, pagination params, or rate limiting
-
-🧪 Task #1 Status
-✅ Completed: Backend Comments CRUD + Tests.
-
-PR branch example: task1-comments-crud
-
-Suggested PR title: Task #1 – Comments CRUD APIs + Automated Tests
