@@ -1,22 +1,35 @@
 # Flask + React CRUD (Assessment – Task #1)
 
-This repo contains **Task #1** of the assessment:
+This project implements **Task #1** of the assessment for the role of **Associate Software Engineer (Python / React)**.
 
-- Backend APIs (Flask) to **add, edit, delete, and list comments** for a given **Task**.
-- Clean structure with **SQLAlchemy models**, **Marshmallow validation**, and **Flask Blueprint**.
-- Basic **automated tests** using **pytest**.
-
-> Task #2 (React UI) can be added later under `/frontend`.
+It contains a **Flask-based backend** that provides clean, well-structured APIs to **add, edit, delete, and list comments** for a given **Task**, following proper CRUD principles.
 
 ---
 
-## Tech
-- Python, Flask, Flask-SQLAlchemy, Marshmallow, Flask-CORS
-- SQLite (local dev)
-- Pytest (tests)
+## 👨‍💻 Author
+**Name:** Rahul Kumar Bhakat  
+**Email:** rahulkumarbhakat27@gmail.com  
+**GitHub:** [rahulkumar027](https://github.com/rahulkumar027)
 
 ---
 
+## 🧠 About the Project
+
+This backend project was built using **Flask**, **SQLAlchemy**, and **Marshmallow** to demonstrate a strong foundation in API design, database modeling, and clean code architecture.
+
+- Task #1: **Backend APIs for Comments CRUD + Automated Tests**
+- Task #2 (Bonus): **React Frontend (to be added later)**
+
+---
+
+## 🧩 Tech Stack
+
+- **Backend:** Python, Flask, Flask-SQLAlchemy, Marshmallow, Flask-CORS  
+- **Database:** SQLite (dev.db)  
+- **Testing:** Pytest  
+- **Frontend:** React (for Task #2 - planned)
+
+---
 ## Project Structure (relevant to Task #1)
 
 backend/
@@ -30,8 +43,7 @@ tests/
 test_comments_api.py
 dev.db # created on first run (SQLite)
 
-yaml
-Copy code
+
 
 ---
 
@@ -52,26 +64,20 @@ python -m venv venv
 .\venv\Scripts\activate
 macOS/Linux
 
-bash
-Copy code
+
 cd backend
 python3 -m venv venv
 source venv/bin/activate
 2) Install dependencies
-bash
-Copy code
+
 pip install flask flask_sqlalchemy flask_marshmallow marshmallow marshmallow-sqlalchemy flask-cors pytest
 3) Start the server
 Windows
 
-powershell
-Copy code
 $env:FLASK_APP="app:create_app"
 flask run
 macOS/Linux
 
-bash
-Copy code
 export FLASK_APP=app:create_app
 flask run
 Server runs at: http://127.0.0.1:5000
@@ -86,13 +92,9 @@ GET /api/ping → http://127.0.0.1:5000/api/ping → {"ok": true}
 5) Seed one Task (so comments can attach)
 Windows
 
-powershell
-Copy code
 python -c "from app import create_app, db; from app.models import Task; a=create_app(); c=a.app_context(); c.push(); t=Task(title='Seed Task'); db.session.add(t); db.session.commit(); print('TASK_ID=', t.id); c.pop()"
 macOS/Linux
 
-bash
-Copy code
 python - << 'PY'
 from app import create_app, db
 from app.models import Task
@@ -111,16 +113,12 @@ Create comment
 POST /api/tasks/<task_id>/comments
 Body:
 
-json
-Copy code
 { "body": "First comment!", "author": "Rahul" }
 List comments
 GET /api/tasks/<task_id>/comments
 Query (optional): limit, offset
 Response:
 
-json
-Copy code
 { "items": [...], "count": 1, "limit": 50, "offset": 0 }
 Get one comment
 GET /api/comments/<id>
@@ -129,8 +127,6 @@ Update comment
 PATCH /api/comments/<id>
 Body (any):
 
-json
-Copy code
 { "body": "Edited text" }
 Delete comment
 DELETE /api/comments/<id> → 204 No Content
@@ -143,8 +139,6 @@ Errors
 Run Tests
 From backend/ (venv active):
 
-bash
-Copy code
 pytest -q
 Notes
 SQLite path is absolute in the app, so CLI and server share the same dev.db.
@@ -153,8 +147,6 @@ Use Postman/PowerShell/curl for POST/PATCH/DELETE (browser address bar does GET 
 
 CORS enabled for /api/*.
 
-css
-Copy code
 
 Want me to also add a short **Task #2 (React) starter** section to the README so you can extend it later?
 
