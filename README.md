@@ -34,20 +34,8 @@ This project implements **Task #1** of the assessment:
 
 ## 📁 Project Structure
 
-flask-react-crud/
-├─ backend/
-│ ├─ app/
-│ │ ├─ init.py # Flask app factory, DB init, blueprints, health
-│ │ ├─ models.py # Task, Comment models
-│ │ ├─ schemas.py # Marshmallow schemas
-│ │ └─ routes/
-│ │ └─ comments.py # /api routes (CRUD for comments + /api/ping)
-│ ├─ tests/
-│ │ └─ test_comments_api.py # pytest suite (in-memory SQLite)
-│ ├─ dev.db # local SQLite db (created at first run)
-│ └─ requirements.txt # deps (optional; see install section)
-└─ README.md
----
+<img width="711" height="460" alt="image" src="https://github.com/user-attachments/assets/d4e31731-a467-43f9-ae0a-48b07748ca6a" />
+
 
 ## 🚀 Quick Start
 
