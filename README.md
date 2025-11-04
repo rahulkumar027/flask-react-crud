@@ -47,10 +47,6 @@ flask-react-crud/
 │ ├─ dev.db # local SQLite db (created at first run)
 │ └─ requirements.txt # deps (optional; see install section)
 └─ README.md
-
-yaml
-Copy code
-
 ---
 
 ## 🚀 Quick Start
