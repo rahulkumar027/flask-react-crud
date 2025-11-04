@@ -54,101 +54,29 @@ dev.db # created on first run (SQLite)
 
 ---
 
-## Run Locally
+## ⚙️ How to Run (Windows)
 
-### 1) Create & activate a virtual environment
-**Windows (PowerShell)**
+### 1. Setup Virtual Environment
 ```powershell
 cd backend
 python -m venv venv
 .\venv\Scripts\activate
-macOS/Linux
-
-
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-2) Install dependencies
-
+2. Install Required Packages
+powershell
+Copy code
 pip install flask flask_sqlalchemy flask_marshmallow marshmallow marshmallow-sqlalchemy flask-cors pytest
-3) Start the server
-Windows
-
+3. Run the Server
+powershell
+Copy code
 $env:FLASK_APP="app:create_app"
 flask run
-macOS/Linux
+Now visit → http://127.0.0.1:5000
 
-export FLASK_APP=app:create_app
-flask run
-Server runs at: http://127.0.0.1:5000
+🔍 Check API Status
+Health Check: http://127.0.0.1:5000/health
 
-4) Quick health check
-Open:
+Ping: http://127.0.0.1:5000/api/ping
 
-GET /health → http://127.0.0.1:5000/health → {"status":"ok"}
-
-GET /api/ping → http://127.0.0.1:5000/api/ping → {"ok": true}
-
-5) Seed one Task (so comments can attach)
-Windows
-
-python -c "from app import create_app, db; from app.models import Task; a=create_app(); c=a.app_context(); c.push(); t=Task(title='Seed Task'); db.session.add(t); db.session.commit(); print('TASK_ID=', t.id); c.pop()"
-macOS/Linux
-
-python - << 'PY'
-from app import create_app, db
-from app.models import Task
-a = create_app()
-with a.app_context():
-    t = Task(title="Seed Task")
-    db.session.add(t); db.session.commit()
-    print("TASK_ID=", t.id)
-PY
-Note the printed TASK_ID (e.g., 1) and use it below.
-
-API (Task #1)
-Base URL: http://127.0.0.1:5000
-
-Create comment
-POST /api/tasks/<task_id>/comments
-Body:
-
-{ "body": "First comment!", "author": "Rahul" }
-List comments
-GET /api/tasks/<task_id>/comments
-Query (optional): limit, offset
-Response:
-
-{ "items": [...], "count": 1, "limit": 50, "offset": 0 }
-Get one comment
-GET /api/comments/<id>
-
-Update comment
-PATCH /api/comments/<id>
-Body (any):
-
-{ "body": "Edited text" }
-Delete comment
-DELETE /api/comments/<id> → 204 No Content
-
-Errors
-400 → validation error (JSON object with details)
-
-404 → not found (e.g., missing task/comment)
-
-Run Tests
-From backend/ (venv active):
-
-pytest -q
-Notes
-SQLite path is absolute in the app, so CLI and server share the same dev.db.
-
-Use Postman/PowerShell/curl for POST/PATCH/DELETE (browser address bar does GET only).
-
-CORS enabled for /api/*.
-
-
-Want me to also add a short **Task #2 (React) starter** section to the README so you can extend it later?
 
 
 
