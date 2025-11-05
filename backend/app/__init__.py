@@ -25,16 +25,28 @@ def create_app(config_object: type | None = None):
     db.init_app(app)
     ma.init_app(app)
 
-    # import models before creating tables
+    # Import models before creating tables
     from . import models  # noqa: F401
 
-    # register blueprints
+    # ✅ Register blueprints
     from .routes.comments import bp as comments_bp
     app.register_blueprint(comments_bp)
 
+    from .routes.tasks import bp as tasks_bp
+    app.register_blueprint(tasks_bp)
+
+    # Root and health endpoints
     @app.route("/")
     def home():
-        return {"message": "Flask API is running", "endpoints": ["/health", "/api/ping", "/api/tasks/<task_id>/comments"]}
+        return {
+            "message": "Flask API is running",
+            "endpoints": [
+                "/health",
+                "/api/ping",
+                "/api/tasks",
+                "/api/tasks/<task_id>/comments"
+            ],
+        }
 
     @app.route("/health")
     def health():
