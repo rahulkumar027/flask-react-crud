@@ -21,10 +21,6 @@ HTML / CSS / JS
 cd "D:\Rahul\.vscode\Better Solution\flask-react-crud\frontend"
 
 
-2️⃣ Install dependencies
-
-npm install
-
 
 3️⃣ Start the frontend development server
 
@@ -48,14 +44,16 @@ export const API_BASE = "http://127.0.0.1:5000";
 🧠 Main Features
 
 ✅ Add a new task
+
 ✅ Edit existing tasks
+
 ✅ Delete tasks
+
 ✅ Fetch and display tasks from the Flask backend
 
 🖼️ Screenshots
 
-Add your screenshots in a screenshots folder inside frontend/,
-and reference them like this:
+
 
 ### 🏠 Home Page  
 ![Home Page](./screenshots/home.png)
